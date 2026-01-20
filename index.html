@@ -3,49 +3,213 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Weather App</title>
+  <title>Weather Nexus</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-
-  <main class="app">
-    <h1>Weather</h1>
-
-    <div class="controls">
-      <input id="cityInput" type="text" placeholder="Enter city name" />
-      <button id="searchBtn">Search</button>
-      <button id="geoBtn">📍</button>
-      <button id="unitToggle">°F</button>
-      <button id="themeToggle">🌙</button>
-    </div>
-
-    <div id="error" class="error hidden"></div>
-
-    <div id="loading" class="loading hidden">
-      <div class="spinner"></div>
-      <p>Loading...</p>
-    </div>
-
-    <section id="currentWeather" class="card hidden">
-      <h2 id="cityName"></h2>
-      <img id="weatherIcon" />
-      <h3 id="temperature"></h3>
-      <p id="description"></p>
-      <p id="feelsLike"></p>
-
-      <div class="details">
-        <span>💧 <b>Humidity:</b> <span id="humidity"></span>%</span>
-        <span>🌬 <b>Wind:</b> <span id="wind"></span> km/h</span>
-        <span>🌅 <b>Sunrise:</b> <span id="sunrise"></span></span>
-        <span>🌇 <b>Sunset:</b> <span id="sunset"></span></span>
+<body class="default">
+  <div id="appContainer" class="app default">
+    
+    <div class="app-header">
+      <div class="header-content">
+        <div class="logo">
+          <i class="wi wi-day-sunny-sparkle"></i>
+          <h1>WeatherNexus</h1>
+        </div>
+        <div class="time-display">
+          <div class="time-info">
+            <p id="date" class="date"></p>
+            <p id="localTime" class="time"></p>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <section id="forecast" class="card hidden">
-      <h2>5-Day Forecast</h2>
-      <div id="forecastCards" class="forecast"></div>
-    </section>
-  </main>
+    <div class="search-section">
+      <div class="search-container">
+        <div class="search-box">
+          <i class="wi wi-direction-up"></i>
+          <input 
+            id="cityInput" 
+            type="text" 
+            placeholder="Search city or location..." 
+            autocomplete="off"
+          />
+          <button id="searchBtn" class="search-btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <div class="quick-actions">
+          <button id="geoBtn" class="action-btn geo" title="Use my location">
+            <i class="wi wi-gps"></i>
+          </button>
+          <button id="unitToggle" class="action-btn unit-btn celsius" title="Toggle unit">
+            °F
+          </button>
+          <div class="theme-selector">
+            <select id="themeSelect" class="theme-dropdown">
+              <option value="default">🌱 Nature</option>
+              <option value="dark">🌙 Dark</option>
+              <option value="gaming">🎮 Gaming</option>
+              <option value="sunset">🌇 Sunset</option>
+              <option value="ocean">🌊 Ocean</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="error" class="error-message hidden"></div>
+
+    <div id="loading" class="loading-state hidden">
+      <div class="loader">
+        <div class="weather-loader">
+          <div class="sun"></div>
+          <div class="cloud"></div>
+          <div class="rain"></div>
+        </div>
+        <p class="loading-text">Fetching weather data...</p>
+      </div>
+    </div>
+
+    <div class="weather-content">
+      <section id="currentWeather" class="current-weather hidden">
+        <div class="current-top">
+          <div class="location-info">
+            <h2 id="cityName" class="city-name"></h2>
+            <p id="description" class="weather-desc"></p>
+          </div>
+          <div class="temp-display">
+            <div class="main-temp">
+              <h3 id="temperature" class="temperature"></h3>
+              <img id="weatherIcon" class="weather-icon-large" />
+            </div>
+            <p id="feelsLike" class="feels-like"></p>
+          </div>
+        </div>
+
+        <div class="current-grid">
+          <div class="stat-card humidity">
+            <i class="wi wi-humidity"></i>
+            <div class="stat-info">
+              <p class="stat-label">Humidity</p>
+              <p class="stat-value" id="humidity"></p>
+            </div>
+          </div>
+          <div class="stat-card wind">
+            <i class="wi wi-strong-wind"></i>
+            <div class="stat-info">
+              <p class="stat-label">Wind</p>
+              <p class="stat-value" id="wind"></p>
+            </div>
+          </div>
+          <div class="stat-card sunrise">
+            <i class="wi wi-sunrise"></i>
+            <div class="stat-info">
+              <p class="stat-label">Sunrise</p>
+              <p class="stat-value" id="sunrise"></p>
+            </div>
+          </div>
+          <div class="stat-card sunset">
+            <i class="wi wi-sunset"></i>
+            <div class="stat-info">
+              <p class="stat-label">Sunset</p>
+              <p class="stat-value" id="sunset"></p>
+            </div>
+          </div>
+          <div class="stat-card pressure">
+            <i class="wi wi-barometer"></i>
+            <div class="stat-info">
+              <p class="stat-label">Pressure</p>
+              <p class="stat-value" id="pressure"></p>
+            </div>
+          </div>
+          <div class="stat-card uv">
+            <i class="wi wi-day-sunny"></i>
+            <div class="stat-info">
+              <p class="stat-label">UV Index</p>
+              <p class="stat-value" id="uv"></p>
+            </div>
+          </div>
+          <div class="stat-card visibility">
+            <i class="wi wi-dust"></i>
+            <div class="stat-info">
+              <p class="stat-label">Visibility</p>
+              <p class="stat-value" id="visibility"></p>
+            </div>
+          </div>
+          <div class="stat-card aqi">
+            <i class="wi wi-smog"></i>
+            <div class="stat-info">
+              <p class="stat-label">Air Quality</p>
+              <p class="stat-value" id="aqi"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="advanced-stats">
+          <div class="advanced-card">
+            <i class="wi wi-thermometer"></i>
+            <div>
+              <p>Dew Point</p>
+              <p id="dewPoint"></p>
+            </div>
+          </div>
+          <div class="advanced-card">
+            <i class="wi wi-cloudy"></i>
+            <div>
+              <p>Cloud Cover</p>
+              <p id="cloud"></p>
+            </div>
+          </div>
+          <div class="advanced-card">
+            <i class="wi wi-windy"></i>
+            <div>
+              <p>Wind Gust</p>
+              <p id="gust"></p>
+            </div>
+          </div>
+          <div class="advanced-card">
+            <i class="wi wi-raindrop"></i>
+            <div>
+              <p>Precipitation</p>
+              <p id="precip"></p>
+            </div>
+          </div>
+          <div class="advanced-card">
+            <i class="wi wi-moon-new"></i>
+            <div>
+              <p>Moon Phase</p>
+              <p id="moonPhase"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="hourlyForecast" class="hourly-forecast hidden">
+        <div class="section-header">
+          <h3><i class="wi wi-time-3"></i> Hourly Forecast</h3>
+          <span class="section-subtitle">Next 12 hours</span>
+        </div>
+        <div id="hourlyCards" class="hourly-container"></div>
+      </section>
+
+      <section id="forecast" class="weekly-forecast hidden">
+        <div class="section-header">
+          <h3><i class="wi wi-calendar"></i> 5-Day Forecast</h3>
+        </div>
+        <div id="forecastCards" class="forecast-container"></div>
+      </section>
+    </div>
+
+    <footer class="app-footer">
+      <div class="footer-content">
+        <p>Powered by <a href="https://www.weatherapi.com/" target="_blank">WeatherAPI.com</a></p>
+        <p class="update-time">Updated just now</p>
+      </div>
+    </footer>
+  </div>
 
   <script src="app.js"></script>
 </body>
