@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main class="app">
+    <h1>Weather</h1>
+
+    <div class="controls">
+      <input id="cityInput" type="text" placeholder="Enter city name" />
+      <button id="searchBtn">Search</button>
+      <button id="geoBtn">📍</button>
+      <button id="unitToggle">°F</button>
+      <button id="themeToggle">🌙</button>
+    </div>
+
+    <div id="error" class="error hidden"></div>
+
+    <div id="loading" class="loading hidden">
+      <div class="spinner"></div>
+      <p>Loading...</p>
+    </div>
+
+    <section id="currentWeather" class="card hidden">
+      <h2 id="cityName"></h2>
+      <img id="weatherIcon" />
+      <h3 id="temperature"></h3>
+      <p id="description"></p>
+      <p id="feelsLike"></p>
+
+      <div class="details">
+        <span>💧 <b>Humidity:</b> <span id="humidity"></span>%</span>
+        <span>🌬 <b>Wind:</b> <span id="wind"></span> km/h</span>
+        <span>🌅 <b>Sunrise:</b> <span id="sunrise"></span></span>
+        <span>🌇 <b>Sunset:</b> <span id="sunset"></span></span>
+      </div>
+    </section>
+
+    <section id="forecast" class="card hidden">
+      <h2>5-Day Forecast</h2>
+      <div id="forecastCards" class="forecast"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
